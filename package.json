@@ -6,6 +6,7 @@
   "author": "zhanglei <zhang.lei.923@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "eachcontent-js":"^1.0.1"
   }
 }
