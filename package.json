@@ -1,0 +1,11 @@
+{
+  "name": "codereview-redundant-httpserver",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/zhanglei923/codereview-redundant-httpserver.git",
+  "author": "zhanglei <zhang.lei.923@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
