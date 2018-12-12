@@ -1,5 +1,5 @@
 let eachcontent = require('eachcontent-js')
-let fs = require('fs')
+let _ = require('lodash')
 let pathutil = require('path')
 
 let taskRootPath = pathutil.resolve(__dirname, '../codereview-redundant-tasks')
@@ -32,7 +32,8 @@ const thisUtil = {
                 count: tasklist[linenum]
             })
         }
-        arr.sort().reverse();
+        arr = _.sortBy(arr, 'linenum');
+        arr.reverse()
         return arr;
     }
 }

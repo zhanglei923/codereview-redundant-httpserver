@@ -1,0 +1,16 @@
+*{
+    padding:0;
+    margin:0;
+}
+.chart{
+    position: relative;
+    height: 10px;
+    border-bottom: 4px solid black;
+}
+.line{
+    border-bottom: 2px solid blue;
+    background-color: red;
+    height:12px;
+    width:1px;
+    position: absolute;
+}

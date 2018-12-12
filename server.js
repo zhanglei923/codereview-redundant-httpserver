@@ -5,9 +5,9 @@ let loadData = require('./loadData')
 
 
 const app = express()
-const port = 3000
+const port = 3005
 
-app.get('/load-data', function (req, res) {
+app.get('/data/load-all-linesdata', function (req, res) {
     let arr = loadData.load(taskId)
     res.json(arr)
   })
