@@ -8,8 +8,12 @@ let loadData = require('./util/loadData')
 const app = express()
 const port = 3005
 
-let taskId = 'tasks_20181212_031656-871897924093_report'
+let taskId = 'tasks_web2017-11_report'//'tasks_20181212_031656-871897924093_report'
 app.get('/data/load-all-linesdata', function (req, res) {
+  var url = req.url;
+  var urlInfo = URL.parse(url, true);
+  var taskId = urlInfo.query.taskId;
+
     let arr = loadData.loadTask(taskId)
     let fmap = loadData.loadFileMap(taskId)
     res.json({

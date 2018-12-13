@@ -1,4 +1,5 @@
-axios.get('/data/load-all-linesdata')
+let gtaskId = 'tasks_web2017-11_report'
+axios.get('/data/load-all-linesdata?taskId='+gtaskId)
   .then(function (response) {
     console.log(response.data.data.length);
     // console.log(response.status);
@@ -9,14 +10,12 @@ axios.get('/data/load-all-linesdata')
   });
 let rpt = []
 let itemwidth = 0;
-let gtaskId;
-let gfmap;
+let gfmap={};
 let do_display = (data)=>{
     let arr = data.data;
     let fmap = data.fmap;
     let taskId = data.taskId;
-    gtaskId=taskId;
-    gfmap = fmap;
+    gfmap[taskId] = fmap;
     console.log(taskId)
     let totalleft = 0;
     let screenHeight = 0;
@@ -90,9 +89,10 @@ let checkLinenum = (e)=>{
     let pairs = response.data.data;
     console.log('linenum='+linenum+':')
 
+    let fmap = gfmap[taskId]
     pairs.forEach((pair)=>{
-      console.log('a:'+gfmap[pair.a].fpath);
-      console.log('b:'+gfmap[pair.b].fpath);
+      console.log('a:'+fmap[pair.a].fpath);
+      console.log('b:'+fmap[pair.b].fpath);
     })
     
   });
