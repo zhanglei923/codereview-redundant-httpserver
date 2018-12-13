@@ -35,7 +35,7 @@ let do_display = (data)=>{
         let height = item.linenum;
         if(height>maxheight)maxheight = height + 100;
         totalleft += width;
-        html = html + `<div class="line" style="width:${width+itemwidth}px;left:${left}px;bottom:${height}px;"></div>`
+        html = html + `<div class="line" linenum="${item.linenum}" style="width:${width+itemwidth}px;left:${left}px;bottom:${height}px;"></div>`
 
         let stopnum = 50;
         if(item.linenum<stopnum) {
