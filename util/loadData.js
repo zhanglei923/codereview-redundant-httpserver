@@ -7,6 +7,29 @@ let taskRootPath = pathutil.resolve(__dirname, '../../codereview-redundant-tasks
 let folders = eachcontent.getAllFolders(taskRootPath)
 const thisUtil = {
     loadPairsByLineNumList:(taskId, linenumlist)=>{
+        let taskPath = thisUtil.getTaskPath(taskId);
+        let result = []
+        //console.log('linenum', linenum)
+        eachcontent.eachContent(taskPath, [/^task/], (txt, path)=>{
+            let pathinfo = pathutil.parse(path);
+
+            let arr = txt.split(',');
+            arr.forEach((str)=>{
+                let item = thisUtil.parseItem(str)
+                let a = item.a;
+                let b = item.b;
+                //console.log(linenum, item.linenum)
+                linenumlist.forEach((linenum)=>{
+                    if(parseInt(item.linenum) === parseInt(linenum)) result.push({
+                        linenum: parseInt(linenum),
+                        result: {a, b}
+                    })
+                })
+            })
+        })
+        result = _.sortBy(result, 'linenum').reverse()
+        return result;
+
         let arr = [];
         linenumlist.forEach((linenum)=>{
             let result = thisUtil.loadPairsByLineNum(taskId, linenum);

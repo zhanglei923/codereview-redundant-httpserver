@@ -46,7 +46,7 @@ let do_display = (data)=>{
     for(let i=arr.length-1, len=0;i>=len;i--){
         let item = arr[i];
         if(item.linenum<ignoreLinenum) {continue;}        
-        if(i < 100) {
+        if(i < 15) {
             unAcceptableLines.push(item.linenum)
         }
         
@@ -128,8 +128,9 @@ do_showUnAcceptables=(taskId, lines, fmap)=>{
     let html = '<table border="1"><tbody>';
     pairlist.forEach((one)=>{
       let linenum = one.linenum;
-      console.log('one.result', one.result.length)
-      one.result.forEach((pair)=>{
+      console.log('one', one)
+      let pair = one.result;
+      //one.result.forEach((pair)=>{
         //console.log(linenum, pairs)
         html += `
           <tr>
@@ -140,10 +141,9 @@ do_showUnAcceptables=(taskId, lines, fmap)=>{
             </td>
           </tr>
         `
-      })
     })
     html+='</tbody></table>'
-    console.log(html)
+    //console.log(html)
     let summaryTables = document.getElementById('summaryTables');
     summaryTables.innerHTML = summaryTables.innerHTML + html;
     
