@@ -3,6 +3,7 @@
     margin:0;
 }
 .chart{
+    margin-left: 16px;
     position: relative;
     height: 10px;
     border-bottom: 4px solid black;
