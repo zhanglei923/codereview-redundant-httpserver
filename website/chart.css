@@ -18,6 +18,7 @@
 }
 .line.fatal10{
     background-color: red;
+    border: 1px solid black;
 }
 .line.fatal6{
     background-color: #d00;

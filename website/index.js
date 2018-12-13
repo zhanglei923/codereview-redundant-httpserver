@@ -1,16 +1,19 @@
-let gtaskId = 'tasks_web2017-11_report'
-axios.get('/data/load-all-linesdata?taskId='+gtaskId)
-  .then(function (response) {
-    console.log(response.data.data.length);
-    // console.log(response.status);
-    // console.log(response.statusText);
-    // console.log(response.headers);
-    // console.log(response.config);
-    do_display(response.data)
-  });
+let loadChart = (taskId) =>{
+  axios.get(`/data/load-all-linesdata?taskId=${taskId}`)
+    .then(function (response) {
+      console.log(response.data.data.length);
+      // console.log(response.status);
+      // console.log(response.statusText);
+      // console.log(response.headers);
+      // console.log(response.config);
+      do_display(response.data)
+    });
+
+}
 let rpt = []
 let itemwidth = 0;
 let gfmap={};
+let dataOffsetX = 0;
 let do_display = (data)=>{
     let arr = data.data;
     let fmap = data.fmap;
@@ -56,6 +59,7 @@ let do_display = (data)=>{
         if(i< 100) item.width += 18;
         if(i >= 100 && i< 1000) item.width += 9;
         item.left = Math.abs(totalleft - item.left)//反转
+        item.left += dataOffsetX;
         if(item.height < 10) item.height = 10
     })
     let html = '';
@@ -74,9 +78,11 @@ let do_display = (data)=>{
     })
 
     let chartElem = document.getElementById('chart')
-    chartElem.innerHTML = html;
+    chartElem.innerHTML += html;
     chartElem.style.height = (screenHeight+10)+'px'
     chartElem.style.width = totalleft+'px'
+
+    dataOffsetX += 20;
 
     document.getElementById('info').innerHTML = rpt.reverse().join(',')
 }
@@ -97,3 +103,6 @@ let checkLinenum = (e)=>{
     
   });
 }
+//let gtaskId = ;
+loadChart('tasks_web2017-11_report')
+loadChart('tasks_web2018-12_report')
