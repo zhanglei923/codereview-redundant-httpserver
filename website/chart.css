@@ -2,6 +2,7 @@
     padding:0;
     margin:0;
     border:0;
+    font-size: 11px;
 }
 .chart{
     margin-left: 16px;
@@ -27,4 +28,16 @@
 }
 .line.fatal1{
     background-color: orange;    
+}
+#summaryTables table{
+
+    float: left;
+    display: block;
+}
+#summaryTables *{
+    border: 1px solid #ddd;
+    font-size: 10px;
+}
+#summaryTables .pathname{
+    color: blue;
 }

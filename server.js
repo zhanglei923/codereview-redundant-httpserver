@@ -47,6 +47,20 @@ app.get('/query/task-report', function (req, res) {
       data: pairs
     })
   })
+  app.get('/query/get-pairs-by-linenumlist', function (req, res) {
+    var url = req.url;
+    var urlInfo = URL.parse(url, true);
+    var linenumlist = urlInfo.query.linenumlist;
+    linenumlist = linenumlist.split(',')
+    var taskId = urlInfo.query.taskId;
+
+    console.log(taskId, linenumlist)
+    let pairs = loadData.loadPairsByLineNumList(taskId, linenumlist);
+    //console.log(taskId, pairs)
+    res.json({
+      data: pairs
+    })
+  })
 app.use(express.static('website'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

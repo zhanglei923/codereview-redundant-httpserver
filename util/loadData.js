@@ -6,6 +6,17 @@ let pathutil = require('path')
 let taskRootPath = pathutil.resolve(__dirname, '../../codereview-redundant-tasks')
 let folders = eachcontent.getAllFolders(taskRootPath)
 const thisUtil = {
+    loadPairsByLineNumList:(taskId, linenumlist)=>{
+        let arr = [];
+        linenumlist.forEach((linenum)=>{
+            let result = thisUtil.loadPairsByLineNum(taskId, linenum);
+            arr.push({
+                linenum,
+                result
+            })
+        })
+        return arr;
+    },
     loadPairsByLineNum: (taskId, linenum)=>{
         let taskPath = thisUtil.getTaskPath(taskId);
         let result = []

@@ -27,7 +27,7 @@ let loadChart = (taskId) =>{
 let ZOOM_RATIO_X = 23;
 let ZOOM_RATIO_Y = 10;
 
-let rpt = []
+let unAcceptableLines = []
 let itemwidth = 0;
 let gfmap={};
 let dataOffsetX = 0;
@@ -46,8 +46,8 @@ let do_display = (data)=>{
     for(let i=arr.length-1, len=0;i>=len;i--){
         let item = arr[i];
         if(item.linenum<ignoreLinenum) {continue;}        
-        if(i< 200) {
-            rpt.push(`<a href="javascript:void(0);" linenum="${item.linenum}" onclick="checkLinenum(event)">${item.linenum}</a>`)
+        if(i < 100) {
+            unAcceptableLines.push(item.linenum)
         }
         
         let fakeCount = item.count;
@@ -115,7 +115,40 @@ let do_display = (data)=>{
     chartElem.style.width = totalleft+'px'
     dataOffsetX += 2;
 
-    document.getElementById('info').innerHTML = rpt.reverse().join(',')
+    //document.getElementById('info').innerHTML = unAcceptableLines.reverse().join(',')
+    do_showUnAcceptables(taskId, unAcceptableLines.reverse(), fmap)
+}
+do_showUnAcceptables=(taskId, lines, fmap)=>{
+  
+  axios.get(`/query/get-pairs-by-linenumlist?linenumlist=${lines.join(',')}&taskId=${taskId}`)
+  .then(function (response) {
+    let pairlist = response.data.data;
+    console.log('pairs='+':', pairlist.length)
+
+    let html = '<table border="1"><tbody>';
+    pairlist.forEach((one)=>{
+      let linenum = one.linenum;
+      console.log('one.result', one.result.length)
+      one.result.forEach((pair)=>{
+        //console.log(linenum, pairs)
+        html += `
+          <tr>
+            <td>${linenum}</td>
+            <td>
+              <div class="pathname">${fmap[pair.a].fpath}</div>
+              <div class="pathname">${fmap[pair.b].fpath}</div>
+            </td>
+          </tr>
+        `
+      })
+    })
+    html+='</tbody></table>'
+    console.log(html)
+    let summaryTables = document.getElementById('summaryTables');
+    summaryTables.innerHTML = summaryTables.innerHTML + html;
+    
+  });
+
 }
 let checkLinenum = (e)=>{
   let a = e.target;
