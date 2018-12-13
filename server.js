@@ -8,8 +8,20 @@ let loadData = require('./util/loadData')
 const app = express()
 const port = 3005
 
-let taskId = 'tasks_web2017-11_report'//'tasks_20181212_031656-871897924093_report'
-app.get('/data/load-all-linesdata', function (req, res) {
+app.get('/query/all-tasks-id', function (req, res) {
+    let arr = loadData.loadTaskIds()
+    let result = []
+    arr.forEach((name)=>{
+      if(/report$/.test(name)) {
+        let a = name.split('/')
+        result.push(a[a.length-1])
+      }
+    })
+    res.json({
+      data: result
+    })
+  })
+app.get('/query/task-report', function (req, res) {
   var url = req.url;
   var urlInfo = URL.parse(url, true);
   var taskId = urlInfo.query.taskId;

@@ -1,5 +1,5 @@
 let loadChart = (taskId) =>{
-  axios.get(`/data/load-all-linesdata?taskId=${taskId}`)
+  axios.get(`/query/task-report?taskId=${taskId}`)
     .then(function (response) {
       console.log(response.data.data.length);
       // console.log(response.status);

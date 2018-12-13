@@ -42,6 +42,9 @@ const thisUtil = {
             a,b,linenum
         }
     },
+    loadTaskIds: () =>{
+        return eachcontent.getAllFolders(taskRootPath)
+    },
     loadTask: (taskId) =>{
         let taskPath = thisUtil.getTaskPath(taskId);
         let linenumMap = {}
