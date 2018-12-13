@@ -105,7 +105,7 @@ let do_display = (data)=>{
     chartElem.innerHTML += html;
     let newheight = (screenHeight+10)
     let oldheight = parseInt(chartElem.style.height);
-    console.log(oldheight, newheight)
+    //console.log(oldheight, newheight)
     if(!isNaN(oldheight) && oldheight < newheight){
       chartElem.style.height = newheight +'px'
     }else
@@ -123,18 +123,18 @@ do_showUnAcceptables=(taskId, lines, fmap)=>{
   axios.get(`/query/get-pairs-by-linenumlist?linenumlist=${lines.join(',')}&taskId=${taskId}`)
   .then(function (response) {
     let pairlist = response.data.data;
-    console.log('pairs='+':', pairlist.length)
+    //console.log('pairs='+':', pairlist.length)
 
     let html = '<table border="1"><tbody>';
-    pairlist.forEach((one)=>{
+    pairlist.forEach((one, i)=>{
       let linenum = one.linenum;
-      console.log('one', one)
+      //console.log('one', one)
       let pair = one.result;
       //one.result.forEach((pair)=>{
         //console.log(linenum, pairs)
         html += `
           <tr>
-            <td>${linenum}</td>
+            <td>${i})${linenum}</td>
             <td>
               <div class="pathname">${fmap[pair.a].fpath}</div>
               <div class="pathname">${fmap[pair.b].fpath}</div>
