@@ -7,7 +7,7 @@ axios.get('/data/load-all-linesdata')
     // console.log(response.config);
     do_display(response.data)
   });
-let rpt = ''
+let rpt = []
 let itemwidth = 0;
 let gtaskId;
 let gfmap;
@@ -18,37 +18,58 @@ let do_display = (data)=>{
     gtaskId=taskId;
     gfmap = fmap;
     console.log(taskId)
-    let html = '';
     let totalleft = 0;
-    let maxheight = 0;
-    for(let i=0, len=arr.length;i<len;i++){
+    let screenHeight = 0;
+
+    let ignoreLinenum = 50;
+    let currentBottom = ignoreLinenum;
+    let infoArr = []
+    for(let i=arr.length-1, len=0;i>=len;i--){
         let item = arr[i];
-        if(i< 100) {
-            itemwidth = 8;
-        }
-        if(i >= 100 && i< 1000) itemwidth = 3;
+        if(item.linenum<ignoreLinenum) {continue;}        
         if(i< 200) {
-            rpt += `<a href="javascript:void(0);" linenum="${item.linenum}" onclick="checkLinenum(event)">${item.linenum}</a>,`
+            rpt.push(`<a href="javascript:void(0);" linenum="${item.linenum}" onclick="checkLinenum(event)">${item.linenum}</a>`)
         }
+        let bottom = currentBottom;
+        let top = item.linenum;
+        let height = top - bottom;
+        currentBottom = top;
+
+
         let width = item.count * 1;
         let left = totalleft;
-        let height = item.linenum;
-        if(height>maxheight)maxheight = height + 100;
-        totalleft += width;
-        html = html + `<div class="line" linenum="${item.linenum}" style="width:${width+itemwidth}px;left:${left}px;bottom:${height}px;"></div>`
 
-        let stopnum = 50;
-        if(item.linenum<stopnum) {
-          html = html + `<div class="line" style="width:${width+itemwidth}px;left:${left}px;bottom:${height}px;background-color:yellow;height:130px;">小于${stopnum}的不显示了</div>`
-          break;
-        }
+        let totalheigh = bottom + height;
+        let linenum = item.linenum;
+        if(totalheigh>screenHeight)screenHeight = totalheigh;
+        totalleft += width;
+        //infoArr.push(`<div class="line" linenum="${item.linenum}" style="width:${width+itemwidth}px;left:${left}px;height:${height}px;bottom:${bottom}px;"></div>`);
+        infoArr.push({
+            linenum: item.linenum,
+            width,
+            left,
+            height,
+            bottom,
+        })
     }
+    infoArr = infoArr.reverse()
+    infoArr.forEach((item, i)=>{
+        if(i< 100) item.width += 18;
+        if(i >= 100 && i< 1000) item.width += 9;
+        item.left = Math.abs(totalleft - item.left)//反转
+        if(item.height < 10) item.height = 10
+    })
+    let html = '';
+    infoArr.forEach((item, i)=>{
+        html += `<div class="line" linenum="${item.linenum}" style="width:${item.width}px;left:${item.left}px;height:${item.height}px;bottom:${item.bottom}px;"></div>`
+    })
+
     let chartElem = document.getElementById('chart')
     chartElem.innerHTML = html;
-    chartElem.style.height = maxheight+'px'
+    chartElem.style.height = (screenHeight+10)+'px'
     chartElem.style.width = totalleft+'px'
 
-    document.getElementById('info').innerHTML = rpt
+    document.getElementById('info').innerHTML = rpt.reverse().join(',')
 }
 let checkLinenum = (e)=>{
   let a = e.target;
