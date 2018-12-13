@@ -62,9 +62,9 @@ destroy@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
 
-eachcontent-js@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/eachcontent-js/-/eachcontent-js-1.0.1.tgz#10398ad06ec33e3d5a3e2fe1489ca39f3f2e44f4"
+eachcontent-js@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/eachcontent-js/-/eachcontent-js-1.0.2.tgz#a0e0f8d4dfc8c4da742e913e44838fd6604765d8"
 
 ee-first@1.1.1:
   version "1.1.1"
