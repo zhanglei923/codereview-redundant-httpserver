@@ -1,3 +1,17 @@
+axios.get(`/query/all-tasks-id`)
+.then(function (response) {
+  console.log(response.data);
+  let html = ''
+  response.data.data.forEach((taskId)=>{
+    html +=  `<option value="${taskId}">${taskId}</option>`
+  })
+  document.getElementById('reports').innerHTML = html;
+});
+document.getElementById('showChartBtn').addEventListener('click', function() {
+    let taskId = document.getElementById('reports').value;
+    loadChart(taskId)
+});
+
 let loadChart = (taskId) =>{
   axios.get(`/query/task-report?taskId=${taskId}`)
     .then(function (response) {
@@ -89,9 +103,16 @@ let do_display = (data)=>{
 
     let chartElem = document.getElementById('chart')
     chartElem.innerHTML += html;
-    chartElem.style.height = (screenHeight+10)+'px'
+    let newheight = (screenHeight+10)
+    let oldheight = parseInt(chartElem.style.height);
+    console.log(oldheight, newheight)
+    if(!isNaN(oldheight) && oldheight < newheight){
+      chartElem.style.height = newheight +'px'
+    }else
+    if(isNaN(oldheight)) chartElem.style.height = newheight +'px'
+    // if(parseInt(chartElem.style.width)< totalleft)chartElem.style.width = totalleft+'px'
+    //chartElem.style.height = (screenHeight+10)+'px'
     chartElem.style.width = totalleft+'px'
-
     dataOffsetX += 2;
 
     document.getElementById('info').innerHTML = rpt.reverse().join(',')
@@ -114,5 +135,5 @@ let checkLinenum = (e)=>{
   });
 }
 //let gtaskId = ;
-loadChart('tasks_web2017-11_report')
-loadChart('tasks_web2018-12_report')
+// loadChart('tasks_web2017-11_report')
+// loadChart('tasks_web2018-12_report')
