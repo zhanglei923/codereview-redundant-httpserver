@@ -10,6 +10,9 @@ let loadChart = (taskId) =>{
     });
 
 }
+let ZOOM_RATIO_X = 23;
+let ZOOM_RATIO_Y = 10;
+
 let rpt = []
 let itemwidth = 0;
 let gfmap={};
@@ -32,21 +35,27 @@ let do_display = (data)=>{
         if(i< 200) {
             rpt.push(`<a href="javascript:void(0);" linenum="${item.linenum}" onclick="checkLinenum(event)">${item.linenum}</a>`)
         }
+        let fakeLinenum = item.linenum;
+        fakeLinenum = fakeLinenum / ZOOM_RATIO_Y
+        if(fakeLinenum < 1) fakeLinenum = 1;
+        let fakeCount = item.count;
         let bottom = currentBottom;
-        let top = item.linenum;
+        let top = fakeLinenum;
         let height = top - bottom;
         currentBottom = top;
+        
 
-
-        let width = item.count * 1;
+        let width = fakeCount / ZOOM_RATIO_X;
+        if(width < 1) width = 1;
         let left = totalleft;
 
         let totalheigh = bottom + height;
-        let linenum = item.linenum;
         if(totalheigh>screenHeight)screenHeight = totalheigh;
         totalleft += width;
         //infoArr.push(`<div class="line" linenum="${item.linenum}" style="width:${width+itemwidth}px;left:${left}px;height:${height}px;bottom:${bottom}px;"></div>`);
         infoArr.push({
+            fakeLinenum,
+            fakeCount,
             linenum: item.linenum,
             width,
             left,
@@ -56,11 +65,11 @@ let do_display = (data)=>{
     }
     infoArr = infoArr.reverse()
     infoArr.forEach((item, i)=>{
-        if(i< 100) item.width += 18;
-        if(i >= 100 && i< 1000) item.width += 9;
+        // if(i< 100) item.width += 18;
+        // if(i >= 100 && i< 1000) item.width += 9;
         item.left = Math.abs(totalleft - item.left)//反转
         item.left += dataOffsetX;
-        if(item.height < 10) item.height = 10
+        //if(item.height < 10) item.height = 10
     })
     let html = '';
     infoArr.forEach((item, i)=>{
@@ -82,7 +91,7 @@ let do_display = (data)=>{
     chartElem.style.height = (screenHeight+10)+'px'
     chartElem.style.width = totalleft+'px'
 
-    dataOffsetX += 20;
+    dataOffsetX += 2;
 
     document.getElementById('info').innerHTML = rpt.reverse().join(',')
 }

@@ -10,9 +10,8 @@
     border-bottom: 4px solid black;
 }
 .line{
-    border-bottom: 2px solid green;
     background-color: green;
-    height:12px;
+    min-height:1px;
     width:1px;
     position: absolute;
 }
