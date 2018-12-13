@@ -61,7 +61,17 @@ let do_display = (data)=>{
     })
     let html = '';
     infoArr.forEach((item, i)=>{
-        html += `<div class="line" linenum="${item.linenum}" style="width:${item.width}px;left:${item.left}px;height:${item.height}px;bottom:${item.bottom}px;"></div>`
+        let warnclass = ''
+        if(item.linenum>1000) {
+          warnclass = 'fatal10';
+        }else if(item.linenum <=1000 && item.linenum>600) {
+          warnclass = 'fatal6';
+        }else if(item.linenum <=600 && item.linenum>300) {
+          warnclass = 'fatal3';
+        }else if(item.linenum <=300 && item.linenum>100) {
+          warnclass = 'fatal1';
+        }
+        html += `<div class="line ${warnclass}" linenum="${item.linenum}" style="width:${item.width}px;left:${item.left}px;height:${item.height}px;bottom:${item.bottom}px;"></div>`
     })
 
     let chartElem = document.getElementById('chart')

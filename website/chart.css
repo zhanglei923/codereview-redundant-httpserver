@@ -8,9 +8,21 @@
     border-bottom: 4px solid black;
 }
 .line{
-    border-bottom: 2px solid red;
-    background-color: red;
+    border-bottom: 2px solid green;
+    background-color: green;
     height:12px;
     width:1px;
     position: absolute;
+}
+.line.fatal10{
+    background-color: red;
+}
+.line.fatal6{
+    background-color: #d00;
+}
+.line.fatal3{
+    background-color: #ea550e;
+}
+.line.fatal1{
+    background-color: orange;    
 }
