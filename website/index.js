@@ -35,18 +35,19 @@ let do_display = (data)=>{
         if(i< 200) {
             rpt.push(`<a href="javascript:void(0);" linenum="${item.linenum}" onclick="checkLinenum(event)">${item.linenum}</a>`)
         }
+        
+        let fakeCount = item.count;
+        let width = fakeCount / ZOOM_RATIO_X;
+        if(width < 1) width = 1;
         let fakeLinenum = item.linenum;
         fakeLinenum = fakeLinenum / ZOOM_RATIO_Y
         if(fakeLinenum < 1) fakeLinenum = 1;
-        let fakeCount = item.count;
         let bottom = currentBottom;
         let top = fakeLinenum;
         let height = top - bottom;
         currentBottom = top;
         
 
-        let width = fakeCount / ZOOM_RATIO_X;
-        if(width < 1) width = 1;
         let left = totalleft;
 
         let totalheigh = bottom + height;
