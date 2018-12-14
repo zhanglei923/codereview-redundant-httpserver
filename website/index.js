@@ -24,8 +24,8 @@ let loadChart = (taskId) =>{
     });
 
 }
-let ZOOM_RATIO_X = 23;
-let ZOOM_RATIO_Y = 10;
+let ZOOM_RATIO_X = 20;
+let ZOOM_RATIO_Y = 7;
 
 let unAcceptableLines = []
 let itemwidth = 0;
