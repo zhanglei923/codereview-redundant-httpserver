@@ -43,6 +43,7 @@
 }
 .line.fatal6{
     background-color: #d00;
+    border: 1px solid #333;
 }
 .line.fatal3{
     background-color: #ea550e;
