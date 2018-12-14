@@ -167,6 +167,7 @@ let checkLinenum = (e)=>{
     
   });
 }
+showGrids(ZOOM_RATIO_Y)
 //let gtaskId = ;
 // loadChart('tasks_web2017-11_report')
 // loadChart('tasks_web2018-12_report')

@@ -10,6 +10,27 @@
     height: 10px;
     border-bottom: 1px solid blue;
 }
+.chart .gridx{
+    border-bottom: 1px dotted #a3a7c3;
+    height:1px;
+    width:100%;
+    position: absolute;
+}
+.chart .gridx.heightof100{
+    bottom: 100px;
+}
+.chart .gridx.heightof300{
+    bottom: 300px;
+}
+.chart .gridx.heightof500{
+    bottom: 500px;
+}
+.chart .gridx.heightof1000{
+    bottom: 1000px;
+}
+.chart .gridx.heightof1500{
+    bottom: 1500px;
+}
 .line{
     background-color: green;
     min-height:1px;
