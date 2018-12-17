@@ -82,11 +82,18 @@ const thisUtil = {
     },
     loadTask: (taskId) =>{
         let taskPath = thisUtil.getTaskPath(taskId);
+        let cachedfilepath = pathutil.resolve(taskPath, './_cacheof_loadTask')
+        if(fs.existsSync(cachedfilepath)){
+            return JSON.parse(fs.readFileSync(cachedfilepath))
+        }
         let linenumMap = {}
+        let distributionMap = {}
         eachcontent.eachContent(taskPath, [/^task/], (txt, path)=>{
             let pathinfo = pathutil.parse(path);
             let filename = pathinfo.name;
             let taskname = filename;
+            let tasknum = parseInt(taskname.replace(/task/g, ''))
+            let tasknum32 = tasknum.toString(32)
 
             let arr = txt.split(',');
             arr.forEach((str)=>{
@@ -96,17 +103,21 @@ const thisUtil = {
                 let linenum = item.linenum;
                 if(typeof linenumMap[''+linenum] === 'undefined') linenumMap[''+linenum] = 0;
                 linenumMap[''+linenum]++
+                if(typeof distributionMap[''+linenum] === 'undefined') distributionMap[''+linenum] = [];
+                if(linenum>12)distributionMap[''+linenum].push(tasknum32)
             })
         })
         let arr = []
         for(let linenum in linenumMap){
             arr.push({
                 linenum: parseInt(linenum),
-                count: linenumMap[linenum]
+                count: linenumMap[linenum],
+                files32: _.uniq(distributionMap[linenum]).join(',')
             })
         }
         arr = _.sortBy(arr, 'linenum');
         arr.reverse()
+        fs.writeFileSync(cachedfilepath, JSON.stringify(arr))
         return arr;
     }
 }
