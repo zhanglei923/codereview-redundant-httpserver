@@ -13,20 +13,28 @@ const thisUtil = {
         //console.log('linenum', linenum)
         eachcontent.eachContent(taskPath, [/^task/], (txt, path)=>{
             let pathinfo = pathutil.parse(path);
-
-            let arr = txt.split(',');
-            arr.forEach((str)=>{
-                let item = thisUtil.parseItem(str)
-                let a = item.a;
-                let b = item.b;
-                //console.log(linenum, item.linenum)
-                linenumlist.forEach((linenum)=>{
-                    if(parseInt(item.linenum) === parseInt(linenum)) result.push({
-                        linenum: parseInt(linenum),
-                        result: {a, b}
+            let ok = false;
+            for(let i=0;i<linenumlist.length;i++){
+                if(txt.indexOf('='+linenumlist[i])>=0) {
+                    ok = true;
+                    break;
+                }
+            }
+            if(ok){
+                let arr = txt.split(',');
+                arr.forEach((str)=>{
+                    let item = thisUtil.parseItem(str)
+                    let a = item.a;
+                    let b = item.b;
+                    //console.log(linenum, item.linenum)
+                    linenumlist.forEach((linenum)=>{
+                        if(parseInt(item.linenum) === parseInt(linenum)) result.push({
+                            linenum: parseInt(linenum),
+                            result: {a, b}
+                        })
                     })
                 })
-            })
+            }
         })
         result = _.sortBy(result, 'linenum').reverse()
         return result;
