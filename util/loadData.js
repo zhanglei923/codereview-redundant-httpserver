@@ -22,16 +22,17 @@ const thisUtil = {
             }
             if(ok){
                 let arr = txt.split(',');
-                arr.forEach((str)=>{
-                    let item = thisUtil.parseItem(str)
-                    let a = item.a;
-                    let b = item.b;
-                    //console.log(linenum, item.linenum)
-                    linenumlist.forEach((linenum)=>{
-                        if(parseInt(item.linenum) === parseInt(linenum)) result.push({
-                            linenum: parseInt(linenum),
-                            result: {a, b}
-                        })
+                linenumlist.forEach((linenum)=>{
+                    arr.forEach((str)=>{
+                        if(str.indexOf('='+linenum)>=0){
+                            let item = thisUtil.parseItem(str)
+                            let a = item.a;
+                            let b = item.b;
+                            if(parseInt(item.linenum) === parseInt(linenum)) result.push({
+                                linenum: parseInt(item.linenum),
+                                result: {a, b}
+                            })
+                        }
                     })
                 })
             }
