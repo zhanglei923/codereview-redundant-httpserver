@@ -2,7 +2,8 @@ axios.get(`/query/all-tasks-id`)
 .then(function (response) {
   console.log(response.data);
   let html = ''
-  response.data.data.forEach((taskId)=>{
+  let data = response.data.data.reverse();
+  data.forEach((taskId)=>{
     html +=  `<option value="${taskId}">${taskId}</option>`
   })
   document.getElementById('reports').innerHTML = html;
